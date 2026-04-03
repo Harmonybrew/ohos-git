@@ -45,7 +45,7 @@ export PATH=/data/git-2.53.0-ohos-arm64/bin:$PATH
 示例：
 ```sh
 cd /opt
-curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.53.0/tar-2.53.0-ohos-arm64.tar.gz
+curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.53.0/git-2.53.0-ohos-arm64.tar.gz
 tar -zxf git-2.53.0-ohos-arm64.tar.gz
 export PATH=/opt/git-2.53.0-ohos-arm64/bin:$PATH
 
