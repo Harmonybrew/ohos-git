@@ -7,8 +7,8 @@ WORKDIR=$(pwd)
 # 仅清理工作目录，不清理系统目录，因为默认用户每次使用新的容器进行构建（仓库中的构建指南是这么指导的）
 rm -rf *.tar.gz \
     deps \
-    git-2.53.0 \
-    git-2.53.0-ohos-arm64
+    git-2.55.0 \
+    git-2.55.0-ohos-arm64
 
 # 下载一些命令行工具，并将它们软链接到 bin 目录中
 cd /opt
@@ -155,18 +155,17 @@ cd ..
 cd $WORKDIR
 
 # 编译 git
-curl -fL -o git-2.53.0.tar.gz https://github.com/git/git/archive/refs/tags/v2.53.0.tar.gz
-tar -zxf git-2.53.0.tar.gz
-cd git-2.53.0
+curl -fL -o git-2.55.0.tar.gz https://github.com/git/git/archive/refs/tags/v2.55.0.tar.gz
+tar -zxf git-2.55.0.tar.gz
+cd git-2.55.0
 patch -p1 < ../0001-disable-pthread-setcancelstate.patch
 patch -p1 < ../0002-skip-ownership-check.patch
 patch -p1 < ../0003-let-git-portable.patch
 make configure
 export CFLAGS="-I/opt/deps/include -DRUNTIME_PREFIX"
 export LDFLAGS="-L/opt/deps/lib -lcurl -lssl -lcrypto -lz"
-export NO_GETTEXT=1
 ./configure \
-    --prefix=/opt/git-2.53.0-ohos-arm64 \
+    --prefix=/opt/git-2.55.0-ohos-arm64 \
     --with-expat=/opt/deps \
     --with-libpcre2=/opt/deps \
     --with-openssl=/opt/deps \
@@ -175,12 +174,13 @@ export NO_GETTEXT=1
     --with-zlib=/opt/deps \
     --with-editor=false \
     --with-pager=more \
-    --with-tcltk=no
-make install RUNTIME_PREFIX=1 NO_GETTEXT=1 INSTALL_SYMLINKS=1
+    --with-tcltk=no \
+    ac_cv_header_libintl_h=no
+make install RUNTIME_PREFIX=1 INSTALL_SYMLINKS=1 NO_RUST=1
 cd ..
 
 # 进行代码签名
-cd /opt/git-2.53.0-ohos-arm64
+cd /opt/git-2.55.0-ohos-arm64
 find . -type f \( -perm -0111 -o -name "*.so*" \) | while read FILE; do
     if file -b "$FILE" | grep -iqE "elf|sharedlib|ELF|shared object"; then
         echo "Signing binary file $FILE"
@@ -192,14 +192,14 @@ done
 cd $WORKDIR
 
 # 履行开源义务，把使用的开源软件的 license 全部聚合起来放到制品中
-cat <<EOF > /opt/git-2.53.0-ohos-arm64/licenses.txt
+cat <<EOF > /opt/git-2.55.0-ohos-arm64/licenses.txt
 This document describes the licenses of all software distributed with the
 bundled application.
 ==========================================================================
 
 git
 =============
-$(cat git-2.53.0/COPYING)
+$(cat git-2.55.0/COPYING)
 
 openssl
 =============
@@ -237,8 +237,8 @@ $(cat deps/curl-8.19.0/COPYING)
 EOF
 
 # 打包最终产物
-cp -r /opt/git-2.53.0-ohos-arm64 ./
-tar -zcf git-2.53.0-ohos-arm64.tar.gz git-2.53.0-ohos-arm64
+cp -r /opt/git-2.55.0-ohos-arm64 ./
+tar -zcf git-2.55.0-ohos-arm64.tar.gz git-2.55.0-ohos-arm64
 
 # 这一步是针对手动构建场景做优化。
 # 在 docker run --rm -it 的用法下，有可能文件还没落盘，容器就已经退出并被删除，从而导致压缩文件损坏。

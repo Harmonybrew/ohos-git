@@ -17,9 +17,9 @@
 示例：
 ```sh
 cd ~
-curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.53.0/git-2.53.0-ohos-arm64.tar.gz
-tar -zxf git-2.53.0-ohos-arm64.tar.gz
-export PATH=~/git-2.53.0-ohos-arm64/bin:$PATH
+curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.55.0/git-2.55.0-ohos-arm64.tar.gz
+tar -zxf git-2.55.0-ohos-arm64.tar.gz
+export PATH=~/git-2.55.0-ohos-arm64/bin:$PATH
 
 # 现在可以使用 git 命令了
 ```
@@ -30,12 +30,12 @@ export PATH=~/git-2.53.0-ohos-arm64/bin:$PATH
 
 示例：
 ```sh
-hdc file send git-2.53.0-ohos-arm64.tar.gz /data
+hdc file send git-2.55.0-ohos-arm64.tar.gz /data
 hdc shell
 
 cd /data
-tar -zxf git-2.53.0-ohos-arm64.tar.gz
-export PATH=/data/git-2.53.0-ohos-arm64/bin:$PATH
+tar -zxf git-2.55.0-ohos-arm64.tar.gz
+export PATH=/data/git-2.55.0-ohos-arm64/bin:$PATH
 
 # 现在可以使用 git 命令了
 ```
@@ -47,9 +47,9 @@ export PATH=/data/git-2.53.0-ohos-arm64/bin:$PATH
 示例：
 ```sh
 cd /opt
-curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.53.0/git-2.53.0-ohos-arm64.tar.gz
-tar -zxf git-2.53.0-ohos-arm64.tar.gz
-export PATH=/opt/git-2.53.0-ohos-arm64/bin:$PATH
+curl -fLO https://github.com/Harmonybrew/ohos-git/releases/download/2.55.0/git-2.55.0-ohos-arm64.tar.gz
+tar -zxf git-2.55.0-ohos-arm64.tar.gz
+export PATH=/opt/git-2.55.0-ohos-arm64/bin:$PATH
 
 # 现在可以使用 git 命令了
 ```
